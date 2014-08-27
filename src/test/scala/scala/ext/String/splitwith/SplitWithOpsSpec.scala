@@ -10,7 +10,6 @@ class SplitWithOpsSpec extends FunSpec with Matchers {
 
       it("should return Nil for an empty string") {
         "".splitWith('.') should be (Seq.empty)
-
       }
       it("should return a sequence with an empty string when the string contains just the separator"){
         ".".splitWith('.') should be (Seq(""))
@@ -22,6 +21,7 @@ class SplitWithOpsSpec extends FunSpec with Matchers {
     }
 
     describe("string splitter") {
+
       it("should return Nil for an empty string") {
         "".splitWith("hi") should be (Seq.empty)
       }
@@ -34,6 +34,7 @@ class SplitWithOpsSpec extends FunSpec with Matchers {
       it("should work with a simple separator string") {
         "hello.world.yay".splitWith("ello") should be (Seq("h", ".world.yay"))
       }
+
     }
   }
 
