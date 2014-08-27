@@ -2,7 +2,15 @@
 
 Started off as an exercise to re-implement String#split without regexp. 
 
-Currently 2-3 times slower than String#split.
+Currently 25% faster than String#split.
+
+## Usage
+
+```scala
+import scala.ext.string.Splitting._
+
+assert("hello.world.yay".splitWith("ello") == Seq("h", ".world.yay"))
+```
 
 ## Rules
 

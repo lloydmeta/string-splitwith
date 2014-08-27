@@ -1,5 +1,6 @@
-package scala.ext.SplitWith
+package scala.ext.string
 
+import Splitting._
 import org.scalatest.{Matchers, FunSpec}
 
 class SplitWithOpsSpec extends FunSpec with Matchers {
