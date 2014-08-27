@@ -6,50 +6,38 @@ package object SplitWith {
     /**
      * Splits the current [[String]] into a list of [[String]] using a [[Char]]
      */
-    def splitWith(splitter: Char): List[String] = splitWithChar(s, splitter)
+    def splitWith(splitter: Char): List[String] = splitQuick(s, s"$splitter")
 
     /**
      * Splits the current [[String]] into a list of [[String]] using a [[String]]
      */
-    def splitWith(splitter: String): List[String] = splitWithString(s, splitter)
+    def splitWith(splitter: String): List[String] = splitQuick(s, splitter)
   }
 
-  def splitWithChar(toSplit: String, splitWith: Char): List[String] = {
-    val (list, finalBuilder) = toSplit.foldLeft((Nil: List[String], new StringBuilder)){ (acc, elem) =>
-      val (seq, builder) = acc
-      if (elem == splitWith) {
-        (builder.mkString :: seq, new StringBuilder)
-      } else {
-        (seq, builder.append(elem))
-      }
-    }
-    (if (finalBuilder.isEmpty)
-      list
-    else
-      finalBuilder.mkString :: list).reverse
-  }
-
-  def splitWithString(toSplit: String, splitWith: String): List[String] = {
-    if (splitWith.length == 1)
-      splitWithChar(toSplit, splitWith.head)
+  def splitQuick(what: String, sep: String): List[String] = {
+    if (what.isEmpty) Nil
     else {
-      val splitterLength = splitWith.length
+      val sepLen = sep.length
+      val whatLen = what.length
+
       @annotation.tailrec
-      def step(remaining: String, seq: List[String], builder: StringBuilder): List[String] = {
-        if (remaining.isEmpty)
-          if (builder.isEmpty)
-            seq
-          else
-            builder.mkString :: seq
-        else {
-          val beginning = remaining.take(splitterLength)
-          if (beginning == splitWith)
-            step(remaining.drop(splitterLength), builder.mkString :: seq, new StringBuilder)
-          else
-            step(remaining.tail, seq, builder.append(beginning.head))
+      def nextToken(from: Int, currentList: List[String]): List[String] = {
+        if (from > whatLen - sepLen) {
+          currentList
+        } else {
+          val next = what.indexOf(sep, from)
+          if (next < 0) {
+            // not found : last token
+            what.substring(from) :: currentList
+          } else {
+            // found sep
+            nextToken(next + sepLen, what.substring(from, next) :: currentList)
+          }
         }
       }
-      step(toSplit, Nil, new StringBuilder).reverse
+
+      val result = nextToken(0, Nil)
+      result.reverse
     }
   }
 
