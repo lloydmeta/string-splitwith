@@ -18,6 +18,7 @@ class SplitWithOpsSpec extends FunSpec with Matchers {
   describe("performance check") {
 
     def bench(f: => Unit, times: Int = 500000): Long = {
+      (0 to 500000).foreach(_ => f) // warm up
       val start = System.currentTimeMillis()
       (0 to times).foreach(_ => f)
       System.currentTimeMillis() - start
