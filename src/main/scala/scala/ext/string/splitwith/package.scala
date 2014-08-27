@@ -1,6 +1,6 @@
 package scala.ext.string
 
-object Splitting {
+package object splitwith {
 
   implicit class SplitWithOps(val s: String) extends AnyVal {
     /**

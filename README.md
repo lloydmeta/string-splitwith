@@ -7,7 +7,7 @@ Currently 25% faster than String#split.
 ## Usage
 
 ```scala
-import scala.ext.string.Splitting._
+import scala.ext.string.splitwith._
 
 assert("hello.world.yay".splitWith("ello") == Seq("h", ".world.yay"))
 ```
