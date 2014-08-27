@@ -14,5 +14,5 @@ assert("hello.world.yay".splitWith("ello") == Seq("h", ".world.yay"))
 
 ## Rules
 
-* Idiomatic Scala code
+* Idiomatic Scala code only
 * Must be tested
