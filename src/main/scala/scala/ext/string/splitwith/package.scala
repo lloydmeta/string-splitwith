@@ -22,15 +22,16 @@ package object splitwith {
 
       @scala.annotation.tailrec
       def nextToken(from: Int, accList: List[String]): List[String] = {
-        if (from > toSplitLen - sepLen) {
-          accList
-        } else {
-          val next = toSplit.indexOf(sep, from)
-          if (next < 0) // No more until the end of the string
-            toSplit.substring(from) :: accList
-          else // found sep
-            nextToken(next + sepLen, toSplit.substring(from, next) :: accList)
+        val nextIndexOfToken = toSplit.indexOf(sep, from)
+        if (nextIndexOfToken < 0) { // separator not in string portion
+          val remainder = toSplit.substring(from)
+          if (remainder.isEmpty)
+            accList
+          else
+            remainder :: accList
         }
+        else // found sep
+          nextToken(nextIndexOfToken + sepLen, toSplit.substring(from, nextIndexOfToken) :: accList)
       }
 
       val result = nextToken(0, Nil)

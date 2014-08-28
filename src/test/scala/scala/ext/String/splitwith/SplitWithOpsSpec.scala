@@ -14,6 +14,9 @@ class SplitWithOpsSpec extends FunSpec with Matchers {
       it("should return a sequence with an empty string when the string contains just the separator"){
         ".".splitWith('.') should be (Seq(""))
       }
+      it("should return the string itself when it doesn't contain the separator"){
+        "hello".splitWith('.') should be (Seq("hello"))
+      }
       it("should properly manage regexp chars"){
         "hello.world.yay".splitWith('.') should be(List("hello", "world", "yay"))
       }
@@ -28,6 +31,9 @@ class SplitWithOpsSpec extends FunSpec with Matchers {
       it("should return a sequence with an empty string when the string contains just the separator"){
         "hi".splitWith("hi") should be (Seq(""))
       }
+      it("should return the string itself when it doesn't contain the separator"){
+        "hello".splitWith("wagagag") should be (Seq("hello"))
+      }
       it("should properly manage regexp chars in the separator string"){
         "hello.world.yay".splitWith(".w") should be(List("hello", "orld.yay"))
       }
@@ -40,19 +46,19 @@ class SplitWithOpsSpec extends FunSpec with Matchers {
 
   describe("performance check") {
 
-    def bench(f: => Unit, times: Int = 500000): Long = {
-      (0 to 500000).foreach(_ => f) // warm up
-      val start = System.currentTimeMillis()
-      (0 to times).foreach(_ => f)
-      System.currentTimeMillis() - start
-    }
-
-    it("should be faster than normal string split") {
-      val stringToSplit = "hello.there.you.me.him.e.haha.ehehe"
-      val normalSplit = bench(stringToSplit.split("e"))
-      val splitWith = bench(stringToSplit.splitWith("e"))
-      splitWith should be < normalSplit
-    }
+//    def bench(f: => Unit, times: Int = 500000): Long = {
+//      (0 to 500000).foreach(_ => f) // warm up
+//      val start = System.currentTimeMillis()
+//      (0 to times).foreach(_ => f)
+//      System.currentTimeMillis() - start
+//    }
+//
+//    it("should be faster than normal string split") {
+//      val stringToSplit = "hello.there.you.me.him.e.haha.ehehe"
+//      val normalSplit = bench(stringToSplit.split("e"))
+//      val splitWith = bench(stringToSplit.splitWith("e"))
+//      splitWith should be < normalSplit
+//    }
 
   }
 
